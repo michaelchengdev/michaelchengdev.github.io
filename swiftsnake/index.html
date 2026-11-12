@@ -1,1 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swift Snake</title>
+  <meta name="description" content="Swift Snake: the classic game, rebuilt for iPhone, iPad and Apple Watch.">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <style>
+    /* Palette mirrors the app's Light theme, and Dark theme in dark mode. */
+    :root {
+      --background: #EDEDEA;
+      --board: #FAFAF8;
+      --snake: #1C1C1E;
+      --food: #FF453A;
+      --text: #1C1C1E;
+      --secondary: rgba(28, 28, 30, 0.6);
+      --hairline: rgba(28, 28, 30, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #0A0A0A;
+        --board: #1C1C1E;
+        --snake: #FAFAF8;
+        --food: #FF453A;
+        --text: #FFFFFF;
+        --secondary: rgba(255, 255, 255, 0.6);
+        --hairline: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--background);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    main {
+      width: 100%;
+      max-width: 640px;
+      padding: 72px 16px 32px;
+      flex: 1;
+    }
+
+    /* Hero: a board-colored card, like the app's start screen. */
+    .hero {
+      text-align: center;
+    }
+
+    .icon {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+      display: block;
+      margin: 0 auto 24px;
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.25rem, 8vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      margin: 4px 0 28px;
+      font-size: 1.125rem;
+      color: var(--secondary);
+    }
+
+    .snake { display: block; margin: 0 auto 32px; }
+    .snake .segment { fill: var(--snake); }
+    .snake .food { fill: var(--food); }
+
+    .platforms {
+      margin: 0;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--secondary);
+    }
+
+    /* Feature tiles, styled like the app's settings cards. */
+    .features {
+      list-style: none;
+      margin: 48px 0 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 28px;
+    }
+
+    .features li {
+      padding: 0;
+    }
+
+    .features h2 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .features p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--secondary);
+    }
+
+    footer {
+      width: 100%;
+      max-width: 640px;
+      padding: 24px 16px 48px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* Capsule links, like the app's glass score badges. */
+    footer a {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--board);
+      box-shadow: 0 0 0 1px var(--hairline);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    footer a:hover { transform: translateY(-1px); }
+    footer a:focus-visible { outline: 2px solid var(--food); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <img class="icon" src="icon.png" alt="Swift Snake app icon" width="96" height="96">
+      <h1>Swift Snake</h1>
+      <p class="tagline">Classic Arcade on Your Wrist</p>
+
+      <!-- Same 6 × 2 snake as the app's start screen: head first, fading toward the tail. -->
+      <svg class="snake" width="216" height="72" viewBox="0 0 144 48" role="img" aria-label="A snake heading toward food">
+        <rect class="segment" x="74" y="26" width="20" height="20" rx="7.6" />
+        <rect class="segment" x="50" y="26" width="20" height="20" rx="5.2" fill-opacity="0.8875" />
+        <rect class="segment" x="26" y="26" width="20" height="20" rx="5.2" fill-opacity="0.775" />
+        <rect class="segment" x="2"  y="26" width="20" height="20" rx="5.2" fill-opacity="0.6625" />
+        <rect class="segment" x="2"  y="2"  width="20" height="20" rx="5.2" fill-opacity="0.55" />
+        <circle class="food" cx="132" cy="36" r="8" />
+      </svg>
+
+      <p class="platforms">iPhone · iPad · Apple Watch</p>
+    </section>
+
+    <ul class="features">
+      <li>
+        <h2>Swipe to steer</h2>
+        <p>Eat, grow, and don't bite your tail. Simple as ever.</p>
+      </li>
+      <li>
+        <h2>Made for your wrist</h2>
+        <p>A full game on Apple Watch. Steer with the Digital Crown.</p>
+      </li>
+      <li>
+        <h2>Nine themes</h2>
+        <p>From Light and Dark to Ocean, Sunset, LCD and Matcha.</p>
+      </li>
+      <li>
+        <h2>Never lose a round</h2>
+        <p>Leave mid-game and pick up right where you left off.</p>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    <a href="https://michaelcheng.dev/swiftsnake/support/">Support</a>
+    <a href="https://michaelcheng.dev/swiftsnake/privacy/">Privacy Policy</a>
+  </footer>
+</body>
+</html>
 
