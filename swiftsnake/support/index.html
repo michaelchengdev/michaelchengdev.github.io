@@ -1,1 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swift Snake Support</title>
+  <meta name="description" content="Help and answers for Swift Snake on iPhone, iPad and Apple Watch.">
+  <link rel="icon" type="image/png" href="../icon.png">
+  <link rel="apple-touch-icon" href="../icon.png">
+  <style>
+    /* Same palette and components as the main page. */
+    :root {
+      --background: #EDEDEA;
+      --board: #FAFAF8;
+      --food: #FF453A;
+      --text: #1C1C1E;
+      --secondary: rgba(28, 28, 30, 0.6);
+      --hairline: rgba(28, 28, 30, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #0A0A0A;
+        --board: #1C1C1E;
+        --food: #FF453A;
+        --text: #FFFFFF;
+        --secondary: rgba(255, 255, 255, 0.6);
+        --hairline: rgba(255, 255, 255, 0.08);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--background);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    main {
+      width: 100%;
+      max-width: 640px;
+      padding: 72px 16px 32px;
+      flex: 1;
+    }
+
+    .header {
+      text-align: center;
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      display: block;
+      margin: 0 auto 16px;
+      box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 7vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      font-size: 1.0625rem;
+      color: var(--secondary);
+    }
+
+    .section-title {
+      margin: 32px 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--secondary);
+    }
+
+    .cards {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 24px;
+    }
+
+    .card {
+      padding: 0;
+    }
+
+    .card h2 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--secondary);
+    }
+
+    .card p + p { margin-top: 8px; }
+
+    .card a { color: var(--food); text-decoration: none; font-weight: 600; }
+    .card a:hover { text-decoration: underline; }
+
+    footer {
+      width: 100%;
+      max-width: 640px;
+      padding: 24px 16px 48px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    footer a {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: var(--board);
+      box-shadow: 0 0 0 1px var(--hairline);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      transition: transform 0.15s ease;
+    }
+
+    footer a:hover { transform: translateY(-1px); }
+    footer a:focus-visible, .card a:focus-visible { outline: 2px solid var(--food); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="header">
+      <img class="icon" src="../icon.png" alt="Swift Snake app icon" width="72" height="72">
+      <h1>Support</h1>
+      <p class="subtitle">Swift Snake</p>
+    </section>
+
+    <p class="section-title">Contact</p>
+    <ul class="cards">
+      <li class="card">
+        <h2>Get in touch</h2>
+            <p>Found a bug or have an idea? Email <a href="mailto:indigo@michaelcheng.dev">indigo@michaelcheng.dev</a> and include your device model and iOS or watchOS version.</p>
+      </li>
+    </ul>
+
+    <p class="section-title">Frequently Asked Questions</p>
+    <ul class="cards">
+      <li class="card">
+        <h2>How do I play?</h2>
+        <p>Tap Play, then swipe in any direction to steer. Eat the food to grow and score points. The round ends if you run into a wall or your own tail.</p>
+      </li>
+      <li class="card">
+        <h2>How do I steer on Apple Watch?</h2>
+        <p>Swipe on the screen, or turn the Digital Crown. Turning it one way turns the snake right, the other way turns it left, relative to where it's heading. Tap the screen to pause.</p>
+      </li>
+      <li class="card">
+        <h2>Where are the settings?</h2>
+        <p>Tap the sliders button next to Play. Settings are available between rounds, so the button is hidden while a round is in progress.</p>
+      </li>
+      <li class="card">
+        <h2>What do the difficulties change?</h2>
+        <p>Easy, Medium and Hard set how fast the snake moves.</p>
+      </li>
+      <li class="card">
+        <h2>What does Wrap Around Walls do?</h2>
+        <p>With it on, the snake leaves one edge of the board and comes back on the opposite side instead of crashing.</p>
+      </li>
+      <li class="card">
+        <h2>Is my game saved if I leave?</h2>
+        <p>Yes. If you leave the app mid-round, the game pauses and saves automatically. Open the app again and tap Resume to continue.</p>
+      </li>
+      <li class="card">
+        <h2>Why aren't my settings syncing with Apple Watch?</h2>
+        <p>On iPhone, open Settings in Swift Snake and make sure Sync with Apple Watch is on. Your Apple Watch needs to be paired with your iPhone and have Swift Snake installed. Changes can take a moment to arrive.</p>
+      </li>
+      <li class="card">
+        <h2>Is my best score shared between devices?</h2>
+        <p>No. Each device keeps its own best score, so your iPhone and Apple Watch each have their own record to beat.</p>
+      </li>
+    </ul>
+  </main>
+
+  <footer>
+    <a href="../">Home</a>
+    <a href="../privacy/">Privacy Policy</a>
+  </footer>
+</body>
+</html>
 
